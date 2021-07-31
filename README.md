@@ -1,2 +1,2 @@
 # TimCoRetailManager
-A retail management built by timco enterprise solutions
+A retail management built by TimCo Enterprise Solutions
