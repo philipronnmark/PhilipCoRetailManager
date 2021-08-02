@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PRMDataManager", "PRMDataMa
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "PRMData", "PRMData\PRMData.sqlproj", "{4972796C-4018-42D2-BDE8-7DDB290CF3AE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PRMDesktopUserInterface", "PRMDesktopUserInterface\PRMDesktopUserInterface.csproj", "{1CD18F66-C496-46A7-8295-3682902CE7E3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{4972796C-4018-42D2-BDE8-7DDB290CF3AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4972796C-4018-42D2-BDE8-7DDB290CF3AE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4972796C-4018-42D2-BDE8-7DDB290CF3AE}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{1CD18F66-C496-46A7-8295-3682902CE7E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CD18F66-C496-46A7-8295-3682902CE7E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CD18F66-C496-46A7-8295-3682902CE7E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CD18F66-C496-46A7-8295-3682902CE7E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
