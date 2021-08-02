@@ -11,13 +11,13 @@ namespace PRMDataManager.App_Start
     {
         public void Apply(Operation operation, SchemaRegistry schemaRegistry, ApiDescription apiDescription)
         {
-            if(operation.paramters == null)
+            if(operation.parameters == null)
             {
                 operation.parameters = new List<Parameter>();
 
             }
 
-            operation.parameters.Add(new Paramter
+            operation.parameters.Add(new Parameter
             {
                 name = "Authorization",
                 @in = "header",
