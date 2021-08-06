@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace PRMDesktopUserInterface.Helpers
+namespace PRMDesktopUI.Library.API
 {
     public static class PasswordBoxHelper
     {

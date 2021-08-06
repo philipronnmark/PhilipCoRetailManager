@@ -1,4 +1,4 @@
-﻿using PRMDesktopUserInterface.Models;
+﻿ using PRMDesktopUI.Library.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -7,16 +7,19 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PRMDesktopUserInterface.Helpers
+namespace PRMDesktopUI.Library.API
 {
     public class APIHelper : IAPIHelper
     {
         //One HttpClient for the lifespan of our client, that way we dont have a bunch of clients that clog up our network
-       private HttpClient apiClient { get; set; }
+        private HttpClient apiClient { get; set; }
+        private ILoggedInUserModel _loggedInUser;
 
-        public APIHelper()
+
+        public APIHelper(ILoggedInUserModel loggedInUser)
         {
             InitializeClient();
+            _loggedInUser = loggedInUser;
         }
 
         private void InitializeClient()
@@ -24,7 +27,7 @@ namespace PRMDesktopUserInterface.Helpers
             string api = ConfigurationManager.AppSettings["api"];
 
             apiClient = new HttpClient();
-            apiClient.BaseAddress = new Uri(api); 
+            apiClient.BaseAddress = new Uri(api);
             apiClient.DefaultRequestHeaders.Accept.Clear();
             apiClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
         }
@@ -51,6 +54,39 @@ namespace PRMDesktopUserInterface.Helpers
                 }
 
             }
+
         }
+        public async Task GetLoggedInUserInfo(string token)
+        {
+            apiClient.DefaultRequestHeaders.Clear(); 
+            apiClient.DefaultRequestHeaders.Accept.Clear();
+            apiClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            apiClient.DefaultRequestHeaders.Add("Authorization", $"Bearer { token }");
+
+            using (HttpResponseMessage response = await apiClient.GetAsync("/api/User"))
+                if(response.IsSuccessStatusCode)
+            {
+                    var results = await response.Content.ReadAsAsync<LoggedInUserModel>();
+            
+                    _loggedInUser.CreatedDate = results.CreatedDate;
+                    _loggedInUser.EmailAddress = results.EmailAddress;
+                    _loggedInUser.FirstName = results.FirstName;
+                    _loggedInUser.LastName = results.LastName;
+                    _loggedInUser.Id = results.Id;
+                    _loggedInUser.Token = token;
+            }
+
+            else
+                {
+                    throw new Exception(response.ReasonPhrase);
+                }
+
+        }
+
+
+
+
     }
+
 }
+

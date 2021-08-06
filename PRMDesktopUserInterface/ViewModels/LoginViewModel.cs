@@ -1,5 +1,5 @@
 ﻿using Caliburn.Micro;
-using PRMDesktopUserInterface.Helpers;
+using PRMDesktopUI.Library.API;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +13,7 @@ namespace PRMDesktopUserInterface.ViewModels
         //Private Backing Field
         private string _userName = "";
         private string _password;
-        private IAPIHelper _apiHelper; 
+        private IAPIHelper _apiHelper;
 
         public LoginViewModel(IAPIHelper apiHelper)
         {
@@ -24,46 +24,51 @@ namespace PRMDesktopUserInterface.ViewModels
         public string UserName
         {
             get { return _userName; }
-            set {
+            set
+            {
                 _userName = value;
                 NotifyOfPropertyChange(() => UserName);
                 NotifyOfPropertyChange(() => CanLogIn);
             }
         }
 
-      
+
         public string Password
         {
             get { return _password; }
-            set { 
+            set
+            {
                 _password = value;
                 NotifyOfPropertyChange(() => Password);
                 NotifyOfPropertyChange(() => CanLogIn);
             }
-           
+
         }
 
         private bool isErrorVisible
         {
-            get {
+            get
+            {
                 bool output = false;
 
                 if (ErrorMessage?.Length > 0)
                 {
                     output = true;
                 }
-                return output ; }
+                return output;
+            }
             set { }
         }
-        
-        
-        
+
+
+
         private string _errorMessage;
 
         public string ErrorMessage
         {
             get { return _errorMessage; }
-            set { 
+            set
+            {
                 _errorMessage = value;
                 NotifyOfPropertyChange(() => isErrorVisible);
                 NotifyOfPropertyChange(() => ErrorMessage);
@@ -74,17 +79,17 @@ namespace PRMDesktopUserInterface.ViewModels
         public bool CanLogIn
         {
             get
-            { 
-            bool output = false;
-            if (UserName?.Length > 0 && Password?.Length > 0)
             {
-                output = true;
+                bool output = false;
+                if (UserName?.Length > 0 && Password?.Length > 0)
+                {
+                    output = true;
+                }
+                return output;
             }
-            return output;
-                 }
 
-            }
-        
+        }
+
 
         /*
          Making a Http call request via apiHelper class and waits for the response code.
@@ -93,8 +98,15 @@ namespace PRMDesktopUserInterface.ViewModels
         {
             try
             {
+
                 ErrorMessage = "";
+
                 var result = await _apiHelper.Authenticate(UserName, Password);
+
+                //Capture more information about the user
+                await _apiHelper.GetLoggedInUserInfo(result.Access_Token);
+                
+
             }
             catch (Exception ex)
             {

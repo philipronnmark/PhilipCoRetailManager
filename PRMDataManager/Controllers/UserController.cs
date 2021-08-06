@@ -15,12 +15,13 @@ namespace PRMDataManager.Controllers
     {
 
         //Retrives the curren logged in users' id and gets their data
-        public List<UserModel> GetById()
+        [HttpGet]
+        public UserModel GetById()
         {
             string userId = RequestContext.Principal.Identity.GetUserId(); 
             UserData data = new UserData();
 
-            return data.GetUserById(userId);
+            return data.GetUserById(userId).First();
         }
 
 
