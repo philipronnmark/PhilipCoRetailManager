@@ -39,13 +39,13 @@ namespace PRMDesktopUserInterface.ViewModels
         }
 
 
-        private string _itemQuantity;
+        private int _itemQuantity;
 
-        public string ItemQuantity
+        public int ItemQuantity
         {
             get { return _itemQuantity; }
             set { _itemQuantity = value; 
-                NotifyOfPropertyChange(() => Products);
+                NotifyOfPropertyChange(() => ItemQuantity);
             }
         }
 

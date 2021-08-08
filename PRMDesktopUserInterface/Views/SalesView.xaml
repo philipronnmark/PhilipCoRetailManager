@@ -47,7 +47,7 @@
         <!--Column 2-->
         <TextBlock Text="Cart" Grid.Row="1" Grid.Column="2"/>
         <ListBox x:Name="Cart" Grid.Row="2" Grid.Column="2"
-                 Grid.RowSpan="3" MinHeight="200" MinWidth="150"/>
+                 Grid.RowSpan="1" MinHeight="200" MinWidth="150"/>
 
         <DockPanel Grid.Row="3" Grid.Column="2">
             <TextBlock Text="SubTotal: " Margin="0 0 15 0"/>
