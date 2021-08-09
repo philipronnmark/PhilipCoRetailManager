@@ -16,6 +16,15 @@ namespace PRMDataManager.Library.Internal.DataAccess
         {
             return ConfigurationManager.ConnectionStrings[name].ConnectionString;
         }
+        /// <summary>
+        /// Retrieves data from the sql database through stored prodcedures.
+        /// </summary>
+        /// <typeparam name="T"></typeparam> Generic Type.
+        /// <typeparam name="U"></typeparam> Generic Type.
+        /// <param name="storedProcedure"></param>
+        /// <param name="parameters"></param>
+        /// <param name="connectionStringName"></param>
+        /// <returns></returns>
         public List<T> LoadData<T, U>(string storedProcedure, U parameters, string connectionStringName)
         {
             string connectionString = GetConnectionString(connectionStringName);

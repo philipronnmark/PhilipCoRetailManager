@@ -18,7 +18,14 @@ namespace PRMDataManager.Controllers
         [HttpGet]
         public UserModel GetById()
         {
-            string userId = RequestContext.Principal.Identity.GetUserId(); 
+            //Give me the current logged in users token.
+            string userId = RequestContext.Principal.Identity.GetUserId();
+
+            /***
+             * Create a UserData Object, which is a data access object that retrieves data from the sql db 
+             * and returns the data in a UserModel object.
+             */
+
             UserData data = new UserData();
 
             return data.GetUserById(userId).First();
