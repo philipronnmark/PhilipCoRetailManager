@@ -1,4 +1,6 @@
 ﻿using Caliburn.Micro;
+using PRMDesktopUI.Library.API;
+using PRMDesktopUI.Library.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,25 +12,41 @@ namespace PRMDesktopUserInterface.ViewModels
 {
     public class SalesViewModel : Screen
     {
-        private BindingList<string> _products;
+        private IProductEndpoint _productEndpoint;
 
-        public BindingList<string> Products
+
+        public SalesViewModel(IProductEndpoint productEndpoint)
+        {
+            _productEndpoint = productEndpoint;
+        }
+
+        protected override async void OnViewLoaded(object view)
+        {
+            base.OnViewLoaded(view);
+
+            await LoadProducts();
+        }
+
+        private async Task LoadProducts()
+        {
+            var productList = await _productEndpoint.GetAll();
+            Products = new BindingList<ProductModel>(productList);
+        }
+        private BindingList<ProductModel> _products;
+
+        public BindingList<ProductModel> Products
         {
             get { return _products; }
             set { 
-                
-                
-                
                 _products = value;
                 NotifyOfPropertyChange(() => Products);
-
 
             }
         }
 
-        private BindingList<string> _cart;
+        private BindingList<ProductModel> _cart;
 
-        public BindingList<string> Cart
+        public BindingList<ProductModel> Cart
         {
             get { return _cart; }
             set {
