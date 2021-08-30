@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using PRMDesktopUI.Library.API;
+using PRMDesktopUI.Library.Helpers;
 using PRMDesktopUI.Library.Models;
 using PRMDesktopUserInterface.ViewModels;
 using System;
@@ -24,15 +25,18 @@ namespace PRMDesktopUserInterface
             "PasswordChanged");
         }
 
+        //Dependency injection system, singleton one instance for the whole program
         protected override void Configure()
         {
             _container.Instance(_container)
             .PerRequest<IProductEndpoint, ProductEndpoint>();
 
             _container
+                
                 .Singleton<IWindowManager, WindowManager>()
                 .Singleton<IEventAggregator, EventAggregator>()
                 .Singleton<ILoggedInUserModel,LoggedInUserModel>()
+                .Singleton<IConfigHelper, ConfigHelper>()
                 .Singleton<IAPIHelper, APIHelper>();
 
                 

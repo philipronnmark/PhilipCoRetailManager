@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using PRMDesktopUI.Library.API;
+using PRMDesktopUI.Library.Helpers;
 using PRMDesktopUI.Library.Models;
 using System;
 using System.Collections.Generic;
@@ -13,11 +14,15 @@ namespace PRMDesktopUserInterface.ViewModels
     public class SalesViewModel : Screen
     {
         private IProductEndpoint _productEndpoint;
+        //
+        private IConfigHelper _configHelper;
 
 
-        public SalesViewModel(IProductEndpoint productEndpoint)
+        public SalesViewModel(IProductEndpoint productEndpoint, IConfigHelper configHelper)
         {
+
             _productEndpoint = productEndpoint;
+            _configHelper = configHelper;
         }
 
         protected override async void OnViewLoaded(object view)
@@ -90,33 +95,59 @@ namespace PRMDesktopUserInterface.ViewModels
         {
             get {
 
-
-                decimal subTotal = 0;
-                foreach (var item in Cart)
-                {
-                    subTotal += (item.Product.RetailPrice * item.QuantityInCart); 
-                }
-                return subTotal.ToString("C"); }
+                return CalculateSubTotal().ToString();
+            }
             
+        }
+
+        private decimal CalculateSubTotal()
+        {
+            decimal subTotal = 0;
+            foreach (var item in Cart)
+            {
+                subTotal += (item.Product.RetailPrice * item.QuantityInCart);
+            }
+            return subTotal;
         }
 
         public string Total
         {
             get
             {
-                //TODO - Replace with calculation
-                return "$0.00";
+                return (CalculateTax() + CalculateSubTotal()).ToString();
             }
 
         }
+
+        /// <summary>
+        /// Tax is not calculating correctly need fix.
+        /// </summary>
+        /// 
         public string Tax
         {
             get
             {
-                //TODO - Replace with calculation
-                return "$0.00";
+                return CalculateTax().ToString();
+
             }
 
+        }
+        private decimal CalculateTax()
+        {
+            decimal taxAmount = 0;
+            decimal taxRate = _configHelper.GetTaxRate();
+            foreach (var item in Cart)
+            {
+                if (item.Product.IsTaxable)
+                {
+                    taxAmount += item.Product.RetailPrice * item.QuantityInCart * taxRate;
+
+                } else
+                {
+                    
+                }
+            }
+            return taxAmount;
         }
 
 
@@ -134,6 +165,8 @@ namespace PRMDesktopUserInterface.ViewModels
         public void RemoveFromCart()
         {
             NotifyOfPropertyChange(() => SubTotal);
+            NotifyOfPropertyChange(() => Tax);
+            NotifyOfPropertyChange(() => Total); 
         }
 
         public bool CanAddToCart
@@ -181,6 +214,9 @@ namespace PRMDesktopUserInterface.ViewModels
 
             //Notify
             NotifyOfPropertyChange(() => SubTotal);
+            NotifyOfPropertyChange(() => Tax);
+            NotifyOfPropertyChange(() => Total);
+
             NotifyOfPropertyChange(() => Cart);
 
 

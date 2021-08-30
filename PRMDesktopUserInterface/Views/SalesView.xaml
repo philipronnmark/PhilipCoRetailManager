@@ -64,7 +64,7 @@
 
         <DockPanel Grid.Row="3" Grid.Column="2">
             <TextBlock Text="SubTotal: " Margin="0 0 15 0"/>
-            <TextBlock x:Name="Subtotal" Text="$0.00" Grid.Row="2" Grid.Column="2" TextAlignment="Right"/>
+            <TextBlock x:Name="SubTotal" Text="$0.00" Grid.Row="2" Grid.Column="2" TextAlignment="Right"/>
 
         </DockPanel>
 

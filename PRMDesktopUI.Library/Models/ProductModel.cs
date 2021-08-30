@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 namespace PRMDesktopUI.Library.Models
 {
+    /// <summary>
+    /// This class is for the api data for front-end use.
+    /// 
+    /// 
+    ///
+    /// </summary>
     public class ProductModel
     {
         public int Id { get; set; }
@@ -13,5 +19,6 @@ namespace PRMDesktopUI.Library.Models
         public string Description { get; set; }
         public decimal RetailPrice { get; set; }
         public int QuantityInStock { get; set; }
+        public bool IsTaxable { get; set; }
     }
 }
